@@ -1,3 +1,3 @@
 test_sorting:
-	pytest test/test_sorting.py
+	pytest -v test/test_sorting.py
 .PHONY: test

@@ -24,7 +24,7 @@ def combine(a, b):
         in zip(a,b)
     ]
 
-def mutate(specimen, n_swaps=5):
+def mutate(specimen, n_swaps=1000):
     # perform random swaps
 
     for _ in range(n_swaps):
@@ -63,3 +63,7 @@ def solve_genetic(seed, max_epoch=1000):
         epoch += 1
     return best
     #return sorted(input)
+
+if __name__=='__main__':
+    input = get_seed()
+    output = solve_genetic(input)
