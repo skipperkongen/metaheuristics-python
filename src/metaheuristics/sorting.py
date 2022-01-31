@@ -50,16 +50,16 @@ def get_best(pop):
     specimen = sorted(pop, key=lambda spec: fitness(spec))[0]
     return fitness(specimen), specimen
 
-def solve_genetic(seed):
+def solve_genetic(seed, max_epoch=1000):
     pop = init_population(seed)
-    not_terminate = 1000
+    epoch = 0
     best = input
-    while not_terminate:
+    while epoch < max_epoch:
         fitness_best, best = get_best(pop)
-        print('Best fitness:', fitness_best)
+        print(f'Epoch {epoch}, best fitness:', fitness_best)
         if fitness_best == 0:
             break
         pop = next_generation(pop)
-        not_terminate -= 1
+        epoch += 1
     return best
     #return sorted(input)
