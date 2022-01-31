@@ -10,9 +10,7 @@ with open('requirements.txt') as fi:
     ]
 
 with open('LICENSE') as fi:
-    LICENCE = [
-        line.strip() for line in fi.readlines()
-    ]
+    LICENSE = fi.read()
 
 setup(
     name='metaheuristics',
