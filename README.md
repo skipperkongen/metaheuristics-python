@@ -1,6 +1,8 @@
 # metaheuristics-python
 A repo with challenges to solve using metaheuristiccs
 
+Example output from genetic sorting (lower fitness is better): 
+
 ```
 Initial specimen  (fitness: 4): [6, 9, 3, 5, 8, 1, 4, 2, 0, 7]
 Genetic algorithm searching...
