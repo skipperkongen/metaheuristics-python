@@ -18,7 +18,7 @@ pip install -e '.[test]'
 
 ## Run
 
-Run sorting:
+Run genetic sorting:
 
 ```bash
 python src/metaheuristics/sorting.py
