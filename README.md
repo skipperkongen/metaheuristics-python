@@ -2,10 +2,10 @@
 A repo with challenges to solve using metaheuristiccs
 
 ```
-$ python src/metaheuristics/sorting.py
-Problem (fitness: 5): [9, 8, 5, 7, 2, 6, 0, 4, 1, 3]
-Best solution found after 55 epochs (fitness: 0): [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-0.30313051% of universe explored (~11000 specimens)
+Initial specimen  (fitness: 4): [6, 9, 3, 5, 8, 1, 4, 2, 0, 7]
+Genetic algorithm searching...
+Best specimen found after 83 epochs (fitness: 0): [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+0.4574515% of universe explored (~16600 specimens)
 Universe contains 3628800 specimens
 ```
 

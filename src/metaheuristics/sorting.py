@@ -62,11 +62,12 @@ if __name__=='__main__':
     max_epoch = 2000
     pop_size = 200
     problem = get_problem(n=n)
-    print(f'Problem (fitness: {fitness(problem)}): {problem}')
+    print(f'Initial specimen  (fitness: {fitness(problem)}): {problem}')
+    print('Genetic algorithm searching...')
     best, epoch = solve_genetic(problem, max_epoch=max_epoch, pop_size=pop_size)
     n_specimens = epoch*pop_size
     space_size = math.factorial(n)
     explored = round(100.0*n_specimens/space_size, 8)
-    print(f'Best solution found after {epoch} epochs (fitness: {fitness(best)}): {best}')
+    print(f'Best specimen found after {epoch} epochs (fitness: {fitness(best)}): {best}')
     print(f'{explored}% of universe explored (~{n_specimens} specimens)')
     print(f'Universe contains {space_size} specimens')
