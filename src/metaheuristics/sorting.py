@@ -1,69 +1,72 @@
 import random
-import pdb
+import math
+import numpy as np
+from metaheuristics.genetic import permute, permute_eps
 
-def get_seed(n=100):
+def get_problem(n=100):
     l = list(range(n))
     random.shuffle(l)
     return l
 
-def init_population(seed, pop_size=100):
-    return [seed] + [
-        random.sample(seed, len(seed))
-        for _ in range(pop_size-1)
-    ]
+def init_pop(problem, pop_size=100):
+    return [problem] + [permute(problem) for _ in range(pop_size-1)]
 
 def fitness(specimen):
+    # one error per decrease step
     errors = [i < j for i, j in zip(specimen, [0] + specimen[:-1])]
     return sum(errors)
 
-def combine(a, b):
-    # would not work, because does not preserve integrity of list
-    return [
-        random.choice([i,j])
-        for i,j
-        in zip(a,b)
-    ]
-
-def mutate(specimen, n_swaps=1000):
-    # perform random swaps
-
-    for _ in range(n_swaps):
-        i = random.randint(0, len(specimen)-1)
-        j = random.randint(0, len(specimen)-1)
-        # swap position of two random numbers
-        specimen[i] = specimen[i] + specimen[j]
-        specimen[j] = specimen[i] - specimen[j]
-        specimen[i] = specimen[i] - specimen[j]
-
-    return specimen
+def fitness2(specimen):
+    # one error per decrease step
+    weights = [item/(i+1) for i, item in enumerate(specimen)]
+    return sum(weights)
 
 def next_generation(pop):
-    weights = [1/(fitness(spec)+1) for spec in pop]
-    sample_best = random.choices(pop, weights=weights, k=len(pop))
+    random_fitness = lambda: fitness if random.random() < 0.8 else fitness2
+    pop_fits = [fitness(spec) for spec in pop]
+    weights = [(max(pop_fits)+1-fit)**5 for fit in pop_fits]
+    biased = random.choices(pop, weights=weights, k=len(pop))
+    #biased_fits = [select_fitness()(spec) for spec in biased]
     new_pop = [
-        mutate(specimen)
-        for specimen in sample_best
+        permute_eps(specimen, fitness2)
+        for specimen in biased
     ]
     return new_pop
 
-def get_best(pop):
-    specimen = sorted(pop, key=lambda spec: fitness(spec))[0]
-    return fitness(specimen), specimen
+def get_alpha(pop):
+    alpha = sorted(pop, key=lambda spec: fitness(spec))[0]
+    return alpha, fitness(alpha)
 
-def solve_genetic(seed, max_epoch=1000):
-    pop = init_population(seed)
+def solve_genetic(problem, max_epoch=1000, pop_size=100):
+    pop = init_pop(problem, pop_size=pop_size)
+    #print(pop)
     epoch = 0
     best = input
+    best_fit = np.inf
     while epoch < max_epoch:
-        fitness_best, best = get_best(pop)
-        print(f'Epoch {epoch}, best fitness:', fitness_best)
-        if fitness_best == 0:
+        distinct = np.unique(pop, axis=0)
+        alpha, alpha_fit = get_alpha(pop)
+        if alpha_fit < best_fit:
+            best = alpha
+            best_fit = alpha_fit
+        # print(f'Epoch {epoch}, alpha_fit: {alpha_fit}, pop_size: {len(pop)}, n_distinct: {len(distinct)}' )
+        if best_fit == 0:
             break
         pop = next_generation(pop)
         epoch += 1
-    return best
+    return best, epoch
     #return sorted(input)
 
 if __name__=='__main__':
-    input = get_seed()
-    output = solve_genetic(input)
+    n = 10
+    max_epoch = 2000
+    pop_size = 200
+    problem = get_problem(n=n)
+    print(f'Problem (fitness: {fitness(problem)}): {problem}')
+    best, epoch = solve_genetic(problem, max_epoch=max_epoch, pop_size=pop_size)
+    n_specimens = epoch*pop_size
+    space_size = math.factorial(n)
+    explored = round(100.0*n_specimens/space_size, 8)
+    print(f'Best solution found after {epoch} epochs (fitness: {fitness(best)}): {best}')
+    print(f'{explored}% of universe explored (~{n_specimens} specimens)')
+    print(f'Universe contains {space_size} specimens')
