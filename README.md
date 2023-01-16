@@ -3,12 +3,12 @@ A repo with challenges to solve using metaheuristiccs
 
 ## Introduction
 
-Example output from genetic sorting (lower fitness is better):
+Example output from genetic sorting (lower fitnes is better):
 
 ```
-Initial specimen  (fitness: 5): [9, 1, 5, 8, 7, 3, 6, 2, 0, 4]
+Initial specimen  (fitnes: 5): [9, 1, 5, 8, 7, 3, 6, 2, 0, 4]
 Genetic algorithm searching...
-Best specimen found after 13 epochs (fitness: 0): [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Best specimen found after 13 epochs (fitnes: 0): [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 0.07164903% of universe explored (~2600 specimens)
 Universe contains 3628800 specimens
 ```

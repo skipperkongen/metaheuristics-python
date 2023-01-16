@@ -58,7 +58,7 @@ def solve_genetic(problem, max_epoch=1000, pop_size=100):
     #return sorted(input)
 
 if __name__=='__main__':
-    n = 10
+    n = 20
     max_epoch = 2000
     pop_size = 200
     problem = get_problem(n=n)
